@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import { Main } from "~/pages/main/main";
+import { IndexAdmin } from "~/pages/admin/index_admin";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -8,10 +8,10 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
+export default function Admin() {
   return (
-    <div className="p-4">
-      <Main />
-    </div>
+    <>
+      <IndexAdmin />
+    </>
   )
 }

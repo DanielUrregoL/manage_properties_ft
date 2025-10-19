@@ -1,0 +1,117 @@
+Table properties {
+    id_propertie integer [primary key, increment] 
+    fk_id_owner integer 
+    state tinyint
+    type tinyint           -- (0=living house, 1=fixed rent, 2=variable rent)
+    name varchar(50)
+    country varchar(50)
+    region varchar(50)
+    city varchar(50)
+    address varchar(100)
+    socioeconomic_bg tinyint
+}
+
+Table contract {
+    id_contract integer [primary key, increment] 
+    fk_id_propertie integer
+    fk_id_tenant integer 
+    fk_id_owner integer
+    fk_id_guarantor integer
+    name varchar 
+    description varchar()
+    path varchar()
+    end_date date
+    start_date date
+    amount integer
+    periodicity varchar
+}
+
+Table services {
+    id_service integer [primary key, increment]
+    fk_id_propertie integer 
+    name varchar
+    description varchar(max)
+    company varchar
+    contract_number varchar
+    pyament_date date
+    generation_date date
+    state tinyint               -- (0=late, 1=paid, 2=pending,) 
+    arrears_days tinyint
+}
+
+Table taxes {
+    id_tax integer [primary key]
+    fk_id_propertie integer
+    name varchar(50)
+    description varchar(max)
+    pyament_date date
+    generation_date date
+    state tinyint               -- (0=late, 1=paid, 2=pending,)
+    arrears_days tinyint
+}
+
+Table owner {
+    id_owner integer [primary key]
+    fk_id_membership integer
+    name varchar
+    last_name varchar
+    gender varchar (1)
+    age integer
+    cellphone varchar [unique]
+    email varchar [unique]
+}
+
+Table tenant {
+    id_tenant integer [primary key]
+    name varchar
+    last_name varchar
+    gender varchar (1)
+    age integer
+    cellphone varchar 
+    second_cellphone varchar 
+    email varchar [unique]
+    job varchar 
+    company varchar 
+    arrears_days smallint
+}
+
+Table guarantors {
+    id_guarantor integer [primary key]
+    name varchar
+    last_name varchar
+    age integer
+    gender varchar (1)
+    cellphone varchar 
+    email varchar [unique]
+}
+
+Table tenant_guarantor {
+    id integer [primary key, increment]
+    fk_id_tenant integer
+    fk_id_guarantor integer
+}
+
+Table payments {
+    id_payment integer [primary key, increment]
+    fk_id_contract integer         
+    fk_id_tenant integer           
+    amount decimal(10,2)
+    payment_date date
+    payment_method varchar(50)
+    reference varchar(100)
+    status tinyint            -- (0=late, 1=paid, 2=pending,)
+    notes varchar(255)
+    arrears_days smallint
+}
+
+Table memberships {
+    id_membership integer [primary key, increment]
+    name varchar(50)
+    description varchar(255)
+    price decimal(10,2)
+    max_properties integer
+    max_tenants integer
+    max_users integer
+    features varchar(255)      -- (optional, or use a separate table for features)
+    state bool                 -- (1=active, 0=inactive)
+}
